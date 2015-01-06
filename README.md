@@ -5,20 +5,20 @@ This repository provides data and source code for the Iterative Most-Likely Orie
 Point (IMLP) algorithm described in the paper:
 
 Seth Billings, Emad Boctor, and Russell Taylor, "Iterative Most-Likely Point Registration
-(IMLP): A Robust Algorithm for Computing Optimal Shape Alignment", PLoS One (2015)
+(IMLP): A Robust Algorithm for Computing Optimal Shape Alignment", PLOS One (2015)
 
 
-To generate IMLP source code: see "cisstICP" folder
-To run PLoS One experiments: see "PLOSONE" folder
+To compile the C++ library containing the IMLP source code: see "cisstICP" folder. 
+To run the experiments described in the PLOS One paper: see "PLOSONE" folder.
 
-Source code is provided for the following algorithms (see PLoS One paper for details):
+Source code is provided for the following algorithms (see PLOS One paper for details):
  - IMLP
  - IMLP-CP
  - IMLP-MD
  - ICP
  - Robust ICP
  
-Other prior-work algorithms evaluated in the PLoS One paper, for which source code is not
+Other algorithms (of other authors) evaluated in the PLOS One paper, for which source code is not
 provided, include:
 
 GICP:
