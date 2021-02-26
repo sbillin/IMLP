@@ -128,12 +128,9 @@ static int vertex_cb( p_ply_argument argument )
 static int vertex_normal_cb(p_ply_argument argument)
 {
   long param_idx;
-  void *obj;
 
-  // get pointer to ply_io object
   // and whether this element value is x, y, or z
-  ply_get_argument_user_data(argument, &obj, &param_idx);
-  ply_io *ply_obj = static_cast<ply_io*>(obj);
+  ply_get_argument_user_data(argument, NULL, &param_idx);
 
   if (_idx_vn >= _nVertices) {
     std::cout << "ERROR: vertex count exceeded while loading vertex normals" << std::endl;
@@ -194,12 +191,9 @@ static int face_cb( p_ply_argument argument )
 static int face_normal_cb( p_ply_argument argument ) 
 {
   long param_idx;
-  void *obj;
 
-  // get pointer to ply_io object
   // and whether this element value is x, y, or z
-  ply_get_argument_user_data(argument, &obj, &param_idx);
-  ply_io *ply_obj = static_cast<ply_io*>(obj);
+  ply_get_argument_user_data(argument, NULL, &param_idx);
   
   if (_idx_fn >= _nFaces) {
     std::cout << "ERROR: face count exceeded while loading face normals" << std::endl;
@@ -214,12 +208,9 @@ static int face_normal_cb( p_ply_argument argument )
 static int face_neighbor_cb(p_ply_argument argument) 
 {
   long param_idx;
-  void *obj;
 
-  // get pointer to ply_io object
   // and whether this element value is vertex 1, 2, or 3
-  ply_get_argument_user_data(argument, &obj, &param_idx);
-  ply_io *ply_obj = static_cast<ply_io*>(obj);
+  ply_get_argument_user_data(argument, NULL, &param_idx);
 
   if (_idx_fnbr >= _nFaces) {
     std::cout << "ERROR: face count exceeded while loading face neighbors" << std::endl;
@@ -561,9 +552,11 @@ int ply_io::read_ply_pointcloud(const std::string &input_ply,
 
   nPoints = ply_set_read_cb(ply, "vertex", "x", point_3d_cb, NULL, 0);
   ply_set_read_cb(ply, "vertex", "y", point_3d_cb, NULL, 1);
+  ply_set_read_cb(ply, "vertex", "z", point_3d_cb, NULL, 2);
 
   nPointNormals = ply_set_read_cb(ply, "vertex", "nx", point_normal_3d_cb, NULL, 0);
   ply_set_read_cb(ply, "vertex", "ny", point_normal_3d_cb, NULL, 1);
+  ply_set_read_cb(ply, "vertex", "nz", point_normal_3d_cb, NULL, 2);
 
   init_temp_variables_pointcloud3d(nPoints, nPointNormals);
 
@@ -632,10 +625,12 @@ int ply_io::write_ply_pointcloud(const std::string &output_ply,
     if (points && !points->empty()) {
       ply_add_property(oply, "x", PLY_FLOAT32, length_type, list_type);
       ply_add_property(oply, "y", PLY_FLOAT32, length_type, list_type);
+      ply_add_property(oply, "z", PLY_FLOAT32, length_type, list_type);
     }
     if (point_normals && !point_normals->empty()) {
       ply_add_property(oply, "nx", PLY_FLOAT32, length_type, list_type);
       ply_add_property(oply, "ny", PLY_FLOAT32, length_type, list_type);
+      ply_add_property(oply, "nz", PLY_FLOAT32, length_type, list_type);
     }
   }
 
